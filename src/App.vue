@@ -1,28 +1,71 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import appConfig from './app.config';
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
+  page: {
+    titleTemplate(title) {
+      title = typeof title === 'function' ? title(this.$store) : title;
+      return title ? `${title} | ${appConfig.title}` : appConfig.title;
+    },
+  },
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss" module>
+@import "./assets/scss/design/index";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
+
+body {
+  background: $color-body-bg;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+#app {
+  @extend .typography-small;
+}
+
+// ===
+// Base element styles
+// ===
+a,
+a:visited {
+  color: $color-link-text;
+}
+
+h1 {
+  @extend .typography-xxlarge;
+}
+h2 {
+  @extend .typography-xlarge;
+}
+h3 {
+  @extend .typography-large;
+}
+h4 {
+  @extend .typography-medium;
+}
+h5,
+h6 {
+  @extend .typography-small;
+}
+
+// ===
+// Vendor
+// ===
+#nprogress .bar {
+  background: $color-link-text;
+}
+
 </style>
