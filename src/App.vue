@@ -8,7 +8,8 @@
 import appConfig from './app.config';
 
 export default {
-  page: {
+  metaInfo: {
+    base: { target: '_blank', href: '/' },
     titleTemplate(title) {
       title = typeof title === 'function' ? title(this.$store) : title;
       return title ? `${title} | ${appConfig.title}` : appConfig.title;

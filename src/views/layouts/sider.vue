@@ -62,5 +62,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-aside {
+  border-right: solid 1px #e6e6e6;
+  overflow-x: hidden;
+}
 
+.el-menu {
+  border-right: none;
+}
 </style>

@@ -28,6 +28,9 @@ export default {
       tableData: Array(20).fill(item)
     }
   },
+  metaInfo: {
+    title: 'home',
+  },
 }
 </script>
 

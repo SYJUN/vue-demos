@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueMeta from 'vue-meta';
 import Axios from 'axios';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -9,6 +10,10 @@ import store from './store';
 import router from './router';
 
 Vue.use(ElementUI, { size: 'small' });
+Vue.use(VueMeta, {
+  keyName: 'metaInfo',
+  refreshOnceOnNavigation: true,
+});
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = Axios;
