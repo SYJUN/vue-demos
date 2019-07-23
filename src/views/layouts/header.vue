@@ -16,7 +16,7 @@
 export default {
   name: 'LayoutHeader',
   data() {
-    const username = this.$store.state.auth.currentUser.username;
+    const username = this.$store.state.auth.currentUser ? this.$store.state.auth.currentUser.username : '';
 
     return {
       username,

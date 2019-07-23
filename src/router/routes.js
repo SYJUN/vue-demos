@@ -1,4 +1,5 @@
 import store from '../store';
+import Layout from '../views/layouts/layout';
 
 function lazyLoadView(AsyncView) {
   const AsyncHandler = () => ({
@@ -28,20 +29,27 @@ function lazyLoadView(AsyncView) {
 
 export default [
   {
-    path: '/home',
-    name: 'home',
-    component: () => lazyLoadView(import('../views/home')),
-    meta: { 
-      requireAuth: true,
-    },
-  },
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: () => lazyLoadView(import('../views/home')),
-    meta: { 
-      requireAuth: true,
-    },
+    path: '/',
+    component: Layout,
+    redirect: '/home',
+    children: [
+      {
+        path: '/home',
+        name: 'home',
+        component: () => import('../views/home'),
+        meta: { 
+          requireAuth: true,
+        },
+      },
+      {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: () => import('../views/dashboard'),
+        meta: { 
+          requireAuth: true,
+        },
+      },
+    ]
   },
   {
     path: '/login',

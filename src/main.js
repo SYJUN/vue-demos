@@ -1,4 +1,8 @@
 import Vue from 'vue';
+
+// a modern alternative to CSS resets
+import 'normalize.css/normalize.css';
+
 import VueMeta from 'vue-meta';
 import Axios from 'axios';
 import ElementUI from 'element-ui';
