@@ -57,9 +57,8 @@ export default [
     component: () => lazyLoadView(import('../views/login')),
     meta: {
       beforeResolve(routeTo, routeFrom, next) {
-        // If the user is already logged in
+        // 如果当前用户登录状态存在，则重定向到 home 页面
         if (store.getters['auth/loggedIn']) {
-          // Redirect to the home page instead
           next({ name: 'home' })
         } else {
           // Continue to the login page

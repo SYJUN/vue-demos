@@ -27,6 +27,12 @@ export default {
   metaInfo: {
     title: 'home',
   },
+  beforeCreate() {
+    // 这边的接口用于测试
+    this.$http.get('/api/jp/avlist/202861101/1/?callback=jsonp9').then((res) => {
+      console.log('movie: ', res);
+    })
+  },
 }
 </script>
 

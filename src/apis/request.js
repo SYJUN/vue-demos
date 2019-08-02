@@ -4,12 +4,14 @@ import router from '../router';
 
 // axios 配置
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL = 'localhost:8100';
+// 此处配置生成环境的 api 基础路径
+axios.defaults.baseURL = "/";
 
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
     const token = store.state.auth.currentUser ? store.state.auth.currentUser.token : '';
+    console.log('axios request config: ', config)
     if (token) {
       config.headers.Authorization = `token ${token}`;
     }

@@ -33,6 +33,8 @@ export default {
   font-size: 12px;
   background-color: #B3C0D1;
   color: #333;
-  line-height: 60px;
+  line-height: 50px;
+  height: 50px;
+  max-height: 50px;
 }
 </style>
