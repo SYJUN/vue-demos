@@ -1,6 +1,6 @@
 <template>
   <el-container ref="container" class="container">
-    <sider-nav />
+<!--    <sider-nav />-->
 
     <el-container direction="vertical">
       <LayoutHeader />
@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import SiderNav from './sider';
+// import SiderNav from './sider';
 import LayoutHeader from './header';
 import AppMain from './AppMain';
 
 export default {
   components: {
-    SiderNav,
+    // SiderNav,
     LayoutHeader,
     AppMain
   },

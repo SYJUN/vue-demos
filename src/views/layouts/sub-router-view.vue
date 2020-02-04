@@ -1,5 +1,5 @@
 <template>
-  <section class="app-main">
+  <section>
     <transition name="fade-transform" mode="out-in">
       <keep-alive>
         <router-view :key="$route.path" />
@@ -9,19 +9,12 @@
 </template>
 
 <script>
-export default {
-  name: 'AppMain',
-}
+  export default {
+    data() {
+      return {};
+    },
+  }
 </script>
 
 <style lang="scss" scoped>
-.app-main {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-}
-.fixed-header+.app-main {
-}
-
 </style>
-
