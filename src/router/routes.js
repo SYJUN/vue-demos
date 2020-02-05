@@ -68,7 +68,7 @@ export default [
         path: '/product',
         name: 'product',
         component: SubRouterView,
-        redirect: '/product/phone',
+        redirect: '/product/computer',
         children: [
           {
             path: 'computer',

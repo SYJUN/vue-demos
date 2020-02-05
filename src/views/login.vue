@@ -60,7 +60,7 @@ export default {
           username: this.loginForm.username.trim(),
           password: this.loginForm.password.trim(),
         }).then(() => {
-          this.$router.push('/home');
+          this.$router.push('/my-site/home');
         });
       });
     },
