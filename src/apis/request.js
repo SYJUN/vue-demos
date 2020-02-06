@@ -7,6 +7,7 @@ axios.defaults.timeout = 5000;
 // 此处配置生成环境的 api 基础路径
 axios.defaults.baseURL = "/";
 
+
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
@@ -26,9 +27,11 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
+    console.log(response)
     return response;
   },
   err => {
+    console.log(err)
     if (err.response) {
       switch (err.response.status) {
         case 401:

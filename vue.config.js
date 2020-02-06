@@ -16,12 +16,12 @@ module.exports = {
     proxy: {
       "/api": {
         //本地
-        target: "http://cache.video.iqiyi.com/",
+        target: "http://m.domiyi.com/",
         // 如果要代理 websockets
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          "^/api": ""
+          "^/api": "/api"
         }
       }
     }
