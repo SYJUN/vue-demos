@@ -11,7 +11,6 @@
           <div class="grid-content menu-center">
             <el-menu
               :default-active="activeFirstMenu"
-              class=""
               mode="horizontal"
               @select="onMenuSelect"
               background-color="#0E63E4"
@@ -35,7 +34,7 @@
                 <span>{{ username }} <i class="el-icon-caret-bottom"></i></span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item>更改密码 </el-dropdown-item>
-                  <el-dropdown-item @click.native="layOutLogin()">退出</el-dropdown-item>
+                  <el-dropdown-item @click.native="onLogOut()">退出</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
           </div>
@@ -45,7 +44,7 @@
     <div class="second-nav-container">
       <el-menu :router="true" mode="horizontal">
         <el-menu-item
-          v-bind:class="{ 'is-active': item.path === activeSecondMenu }"
+          :class="{ 'is-sub-active': item.path === activeSecondMenu }"
           v-for="(item, index) in currentNavList"
           :key="index"
           :index="item.path"
@@ -60,14 +59,13 @@
 
 <script>
 import * as _ from "lodash";
-import { mapActions } from 'vuex'
+import { mapActions } from 'vuex';
 
 export default {
   name: "LayoutHeader",
   data() {
-    const username = this.$store.state.auth.currentUser
-      ? this.$store.state.auth.currentUser.username
-      : "";
+    const { auth } = this.$store.state;
+    const username = auth.currentUser ? auth.currentUser.username : '';
     const navList = [
       {
         path: "/my-site",
@@ -103,12 +101,10 @@ export default {
         this.currentNavList = currentRouter.subList;
       }
     },
-    layOutLogin() {
-      this.logOut ({
-
-      }).then (() => {
-        this.$router.push('/login')
-      })
+    onLogOut() {
+      this.logOut().then(() => {
+        this.$router.push('/login');
+      });
     }
   },
   computed: {
@@ -116,9 +112,7 @@ export default {
       const route = this.$route;
       const { meta, path } = route;
 
-      const currentRouter = _.find(this.navList, item =>
-        _.startsWith(route.path, item.path)
-      );
+      const currentRouter = _.find(this.navList, item => _.startsWith(route.path, item.path));
       if (currentRouter) {
         this.currentNavList = currentRouter.subList;
       }
@@ -163,6 +157,8 @@ export default {
   justify-content: center;
   background-color: #0e63e4
 }
+
+/* 二级菜单 */
 .second-nav-container {
   width: 100%;
   height: 55px;
@@ -171,13 +167,21 @@ export default {
   justify-content: center;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
-  & .el-menu--horizontal > .el-menu-item {
-    border: none;
-  }
 
-  & .el-menu--horizontal > .el-menu-item.is-active{
-    font-weight: bold;
-    border: none;
+  .el-menu--horizontal {
+    > .el-menu-item {
+      border: none;
+      
+      &.is-active {
+        border: none;
+        color: unset;
+      }
+      
+      &.is-sub-active{
+        font-weight: bold;
+        color: #303133;
+      }
+    }
   }
 }
 

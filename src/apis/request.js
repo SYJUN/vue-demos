@@ -11,7 +11,7 @@ axios.defaults.baseURL = "/";
 axios.interceptors.request.use(
   config => {
     const token = store.state.auth.currentUser ? store.state.auth.currentUser.token : '';
-    console.log('axios request config: ', config)
+    // console.log('axios request config: ', config)
     if (token) {
       config.headers.Authorization = `token ${token}`;
     }
