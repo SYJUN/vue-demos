@@ -77,12 +77,12 @@ export default {
         ]
       },
       {
-        path: "/product",
-        name: "product",
-        label: "产品",
+        path: "/organize",
+        name: "organize",
+        label: "组织",
         subList: [
-          { path: "/computer", name: "computer", label: "电脑" },
-          { path: "/phone", name: "phone", label: "手机" }
+          { path: "/user", name: "user", label: "用户" },
+          { path: "/phone", name: "phone", label: "部门" }
         ]
       }
     ];
@@ -182,6 +182,10 @@ export default {
         color: #303133;
       }
     }
+    & .el-menu-item:hover{
+      background-color: #ededed;
+      border-radius: 5px;
+    }
   }
 }
 
@@ -189,6 +193,7 @@ export default {
   text-align: right;
   font-size: 12px;
   height: 55px !important;
+  padding-right: 30px;
 
   span {
     color: #fff;

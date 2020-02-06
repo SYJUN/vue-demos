@@ -62,18 +62,18 @@ export default [
         ],
       },
       /**
-       * 产品
+       * 组织
        */
       {
-        path: '/product',
-        name: 'product',
+        path: '/organize',
+        name: 'organize',
         component: SubRouterView,
-        redirect: '/product/computer',
+        redirect: '/organize/user',
         children: [
           {
-            path: 'computer',
-            name: 'computer',
-            component: () => import('../views/products/computer'),
+            path: 'user',
+            name: 'user',
+            component: () => import('../views/organize/user'),
             meta: {
               requireAuth: true,
             },
@@ -81,7 +81,7 @@ export default [
           {
             path: 'phone',
             name: 'phone',
-            component: () => import('../views/products/phone'),
+            component: () => import('../views/organize/phone'),
             meta: {
               requireAuth: true,
             },
