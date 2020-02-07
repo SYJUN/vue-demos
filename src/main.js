@@ -19,10 +19,10 @@ Vue.use(VueMeta, {
   keyName: 'metaInfo',
   refreshOnceOnNavigation: true,
 });
+// Vue.axios | this.axios | this.$http
 Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
-// Vue.prototype.$http = Axios;
 
 new Vue({
   router,

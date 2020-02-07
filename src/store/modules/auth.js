@@ -50,7 +50,10 @@ export const actions = {
 
   // Logs out the current user.
   logOut({ commit }) {
-    commit('SET_CURRENT_USER', null);
+    return new Promise(resolve => {
+      commit('SET_CURRENT_USER', null);
+      resolve();
+    })
   },
 
   validate({ commit, state }) {

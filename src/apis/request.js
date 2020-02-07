@@ -7,11 +7,12 @@ axios.defaults.timeout = 5000;
 // 此处配置生成环境的 api 基础路径
 axios.defaults.baseURL = "/";
 
+
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
     const token = store.state.auth.currentUser ? store.state.auth.currentUser.token : '';
-    console.log('axios request config: ', config)
+    // console.log('axios request config: ', config)
     if (token) {
       config.headers.Authorization = `token ${token}`;
     }
@@ -26,9 +27,11 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
+    // console.log(response)
     return response;
   },
   err => {
+    console.log(err)
     if (err.response) {
       switch (err.response.status) {
         case 401:
@@ -41,9 +44,10 @@ axios.interceptors.response.use(
         default:
           break;
       }
+      return Promise.reject(err.response.data);
     }
 
-    return Promise.reject(err.response.data);
+    return Promise.reject();
   }
 );
 

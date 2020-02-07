@@ -1,5 +1,6 @@
 import store from '../store';
 import Layout from '../views/layouts/layout';
+import SubRouterView from '../views/layouts/sub-router-view';
 
 function lazyLoadView(AsyncView) {
   const AsyncHandler = () => ({
@@ -31,21 +32,67 @@ export default [
   {
     path: '/',
     component: Layout,
-    redirect: '/home',
+    redirect: '/my-site/home',
     children: [
+      /**
+       * 我的地盘
+       */
       {
-        path: '/home',
-        name: 'home',
-        component: () => import('../views/home'),
-        meta: { 
-          requireAuth: true,
-        },
+        path: '/my-site',
+        name: 'mySite',
+        component: SubRouterView,
+        redirect: '/my-site/home',
+        children: [
+          {
+            path: 'home',
+            name: 'home',
+            component: () => import('../views/my-site/home'),
+            meta: {
+              requireAuth: true,
+            },
+          },
+          {
+            path: 'schedule',
+            name: 'schedule',
+            component: () => import('../views/my-site/schedule'),
+            meta: {
+              requireAuth: true,
+            },
+          },
+        ],
+      },
+      /**
+       * 组织
+       */
+      {
+        path: '/organize',
+        name: 'organize',
+        component: SubRouterView,
+        redirect: '/organize/user',
+        children: [
+          {
+            path: 'user',
+            name: 'user',
+            component: () => import('../views/organize/user'),
+            meta: {
+              requireAuth: true,
+            },
+          },
+          {
+            path: 'phone',
+            name: 'phone',
+            component: () => import('../views/organize/phone'),
+            meta: {
+              requireAuth: true,
+            },
+          },
+        ],
       },
       {
         path: '/dashboard',
         name: 'dashboard',
         component: () => import('../views/dashboard'),
-        meta: { 
+        meta: {
           requireAuth: true,
         },
       },

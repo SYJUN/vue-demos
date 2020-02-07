@@ -60,7 +60,7 @@ export default {
           username: this.loginForm.username.trim(),
           password: this.loginForm.password.trim(),
         }).then(() => {
-          this.$router.push('/home');
+          this.$router.push('/my-site/home');
         });
       });
     },
@@ -70,7 +70,11 @@ export default {
 
 <style lang="scss" scoped>
 .form-container {
+  background-color: #fff;
+  padding: 20px;
+  margin: 100px auto;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #8d8989;
   width: 500px;
-  margin: 0 auto;
 }
 </style>
