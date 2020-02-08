@@ -4,7 +4,10 @@
       <div class="title">{{ title }}</div>
       <div class="setting-icon">
         <el-popover v-model="visible" placement="bottom-end" width="300" trigger="click">
-          <batch-user-custom-field :action="action" @save="onSettingFieldsSave"></batch-user-custom-field>
+          <batch-user-custom-field :action="action"
+                                   :default-check-list="customFields"
+                                   @save="onSettingFieldsSave"
+                                   @cancel="onSettingFieldsCancel"></batch-user-custom-field>
           <i slot="reference" class="el-icon-s-tools"></i>
         </el-popover>
       </div>
@@ -113,7 +116,6 @@
         allFields: [],
         systemFields: [],
         customFields: [],
-        ownDepartmentObj: null,
         visible: false,
   
         // test: select field options
@@ -153,6 +155,10 @@
         if (_.isArray(checkFields)) {
           this.allFields = [...this.systemFields, ...checkFields];
         }
+      },
+  
+      onSettingFieldsCancel() {
+        this.visible = false;
       },
   
       /**
@@ -210,10 +216,6 @@
           // { label: '微信', prop: 'weixin', width: '180px', type: 'input' },
           { label: '性别', prop: 'sex', width: '180px', type: 'radio' },
         ];
-        
-        // 由于 '所属部门' 的字段顺序比较特殊，故而先将该字段截取出来
-        // this.ownDepartmentObj = _.find(this.customFields, { prop: 'ownDepartment' });
-        // this.customFields = _.filter(this.customFields, item => item.prop !== 'ownDepartment');
       },
     },
 

@@ -27,6 +27,10 @@
         type: String,
         default: 'create',
       },
+      defaultCheckList: {
+        type: Array,
+        default: [],
+      },
     },
     
     data() {
@@ -97,10 +101,21 @@
           ];
         }
       },
+  
+      /**
+       * 选中默认字段
+       * @private
+       */
+      _processCheckDefaultFields() {
+        if (this.defaultCheckList) {
+          this.checkList = _.map(this.defaultCheckList, item => item.label);
+        }
+      },
     },
     
     created() {
       this._initCheckList();
+      this._processCheckDefaultFields();
     }
   }
 </script>
