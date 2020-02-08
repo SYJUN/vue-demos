@@ -26,19 +26,19 @@
           </template>
   
           <!-- 真实姓名 -->
-          <template v-else-if="col.prop === 'realname'">
+          <template v-else-if="col.prop === 'realName'">
             <el-table-column :prop="col.prop" :label="col.label" min-width="180px">
               <template slot-scope="scope">
-                <el-input v-model="scope.row.realname" placeholder="请输入内容"></el-input>
+                <el-input v-model="scope.row.realName" placeholder="请输入内容"></el-input>
               </template>
             </el-table-column>
           </template>
           
           <!-- 密码 -->
-          <template v-else-if="col.prop === 'passwd'">
+          <template v-else-if="col.prop === 'password'">
             <el-table-column :prop="col.prop" :label="col.label" min-width="180px">
               <template slot-scope="scope">
-                <el-input type="passwd" v-model="scope.row.passwd" placeholder="请输入内容"></el-input>
+                <el-input type="password" v-model="scope.row.password" placeholder="请输入内容"></el-input>
               </template>
             </el-table-column>
           </template>
@@ -180,7 +180,7 @@
       _processBatchCreateList() {
         const list = [];
         for (let i = 0; i < 10; i += 1) {
-          list.push({ realname: '', post: '', sex: '男', phone:'', passwd:'' });
+          list.push({ realName: '', post: '', sex: '男', phone: '', password: '' });
         }
         return list;
       },
@@ -191,7 +191,7 @@
       _processSystemFields() {
         this.systemFields = [
           // { label: '用户名', prop: 'userName', type: 'input' },
-          { label: '真实姓名', prop: 'realname', type: 'input' },
+          { label: '真实姓名', prop: 'realName', type: 'input' },
           { label: '职位', prop: 'post', width: '120px', type: 'select', clearable: true },
           { label: '手机号', prop: 'phone', type: 'input', clearable: true },
         ];
@@ -199,7 +199,7 @@
         if (this.action === 'create') {
           this.systemFields.push(
             // { label: '权限分组', prop: 'limit', width: '120px', type: 'select', clearable: true },
-            { label: '密码', prop: 'passwd', type: 'inputGroup', clearable: true },
+            { label: '密码', prop: 'password', type: 'inputGroup', clearable: true },
           );
         } else if (this.action === 'edit') {
           this.systemFields.unshift({ label: 'ID', prop: 'id', width: '60px', type: 'normal' });
