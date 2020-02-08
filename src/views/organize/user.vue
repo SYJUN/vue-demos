@@ -6,7 +6,7 @@
           <el-button type="primary" icon="el-icon-plus" @click="addBatchUserBtn"
             >批量添加用户</el-button
           >
-          <el-button type="primary" icon="el-icon-plus" @click="addUserBtn"
+          <el-button type="primary" icon="el-icon-plus" @click="addUserBtn()"
             >添加用户</el-button
           >
         </div>
@@ -28,6 +28,7 @@
               icon="el-icon-edit-outline"
               circle
               title="编辑用户"
+              @click="addUserBtn(scope.row)"
             ></el-button>
             <el-button
               type="primary"
@@ -80,7 +81,7 @@
       </div>
     </div>
     <!-- 批量添加用户 -->
-    <div v-show="isAddUserBatchSOH">
+    <!-- <div v-show="isAddUserBatchSOH">
       <div>
         <el-table :data="addTableData" stripe style="width: 100%">
           <el-table-column prop="realname" label="姓名">
@@ -133,20 +134,27 @@
           </el-button>
         </div>
       </div>
-    </div>
+    </div> -->
+    <batch-user v-if="isAddUserBatchSOH" :action="batchUserAction" :data="[]" @cancel="onBatchUserBack"  @save="saveUserAllBtn"></batch-user>
   </div>
 </template>
 
 <script>
-import * as _ from "lodash";
-import axios from "axios";
+  import * as _ from "lodash";
+  import axios from "axios";
+  import BatchUser from '../../components/batch-user';
+
 
 export default {
+  components: {
+    BatchUser,
+  },
   data() {
     return {
       istableDataSOH: true,
       isAddUserSOH: false,
       isAddUserBatchSOH: false,
+      batchUserAction: 'create',
       tableUserData: [],
       addTableData: [],
       ruleForm: {
@@ -169,16 +177,31 @@ export default {
   methods: {
     // 获取所有用户
     listAllUser() {
-      this.$http.get("/api/staff/listAll").then(res => {
-        if (res && res.data) {
-          this.tableUserData = res.data;
-        }
-      });
+      this.tableUserData = [{
+            id:1,
+            realname:'汪智玉',
+            post:'职位',
+            sex:'女',
+            
+          }]
+      // this.$http.get("/api/staff/listAll").then(res => {
+      //   if (res && res.data) {
+      //     this.tableUserData = res.data;
+      //   }
+      // });
     },
     // 添加单个用户
-    addUserBtn() {
+    addUserBtn(row) {
+      console.log(row)
       this.istableDataSOH = false;
       this.isAddUserSOH = true;
+      if(row && row.id) {
+         this.ruleForm.realname =row.realname;
+         this.ruleForm.sex =row.sex;
+         this.ruleForm.post =row.post;
+         this.ruleForm.phone =row.phone;
+         this.ruleForm.password =row.password;
+      }
     },
     // 保存单个用户
     saveUserBtn(formName) {
@@ -252,19 +275,19 @@ export default {
           });
         }
       }
-
+      this.batchUserAction = 'create';
       this.istableDataSOH = false;
       this.isAddUserBatchSOH = true;
     },
     // 批量保存
-    saveUserAllBtn() {
-      const batchData = _.filter(this.addTableData, function(item) {
+    saveUserAllBtn(list) {
+      const batchData = _.filter(list, function(item) {
         return item.realname && item.phone && item.passwd;
       });
+      console.log(batchData)
       axios
         .post("/api/staff/saveAll", batchData)
         .then(res => {
-          console.log(res);
           if (!res.data) {
             this.$message({
               message: "添加成功",
@@ -286,13 +309,13 @@ export default {
         });
     },
     //  返回批量
-    backBatchBtn() {
+    onBatchUserBack() {
       this.istableDataSOH = true;
       this.isAddUserBatchSOH = false;
     },
     // 重置批量添加的值
     resectNum() {
-      const emptyEvery = _.each(this.addTableData, function(value, key) {
+      const emptyEvery = _.each(this.addTableData, function(value) {
         value.realname = "" ;
         value.phone = "" ;
         value.passwd = "" ;

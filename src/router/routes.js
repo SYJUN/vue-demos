@@ -79,9 +79,9 @@ export default [
             },
           },
           {
-            path: 'phone',
-            name: 'phone',
-            component: () => import('../views/organize/phone'),
+            path: 'privilegeGroup',
+            name: 'privilegeGroup',
+            component: () => import('../views/organize/privilegeGroup'),
             meta: {
               requireAuth: true,
             },

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    产品 - 手机
+    权限
   </div>
 </template>
 

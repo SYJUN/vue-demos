@@ -23,19 +23,19 @@
           </template>
   
           <!-- 真实姓名 -->
-          <template v-else-if="col.prop === 'realName'">
+          <template v-else-if="col.prop === 'realname'">
             <el-table-column :prop="col.prop" :label="col.label" min-width="180px">
               <template slot-scope="scope">
-                <el-input v-model="scope.row.realName" placeholder="请输入内容"></el-input>
+                <el-input v-model="scope.row.realname" placeholder="请输入内容"></el-input>
               </template>
             </el-table-column>
           </template>
           
           <!-- 密码 -->
-          <template v-else-if="col.prop === 'password'">
+          <template v-else-if="col.prop === 'passwd'">
             <el-table-column :prop="col.prop" :label="col.label" min-width="180px">
               <template slot-scope="scope">
-                <el-input type="password" v-model="scope.row.password" placeholder="请输入内容"></el-input>
+                <el-input type="passwd" v-model="scope.row.passwd" placeholder="请输入内容"></el-input>
               </template>
             </el-table-column>
           </template>
@@ -118,20 +118,14 @@
   
         // test: select field options
         options: [{
-          value: '黄金糕',
-          label: '黄金糕'
+          value: '研发',
+          label: '研发'
         }, {
-          value: '双皮奶',
-          label: '双皮奶'
+          value: '主管',
+          label: '主管'
         }, {
-          value: '蚵仔煎',
-          label: '蚵仔煎'
-        }, {
-          value: '龙须面',
-          label: '龙须面'
-        }, {
-          value: '北京烤鸭',
-          label: '北京烤鸭'
+          value: '总经理',
+          label: '总经理'
         }],
       };
     },
@@ -141,7 +135,6 @@
        * 保存
        */
       onSave() {
-        console.log(this.list);
         this.$emit('save', this.list);
       },
       
@@ -180,8 +173,8 @@
        */
       _processBatchCreateList() {
         const list = [];
-        for (let i = 0; i <= 10; i += 1) {
-          list.push({ id: i + 1, userName: '', realName: '', job: '' });
+        for (let i = 0; i < 10; i += 1) {
+          list.push({ realname: '', post: '', sex: '男', phone:'', passwd:'' });
         }
         return list;
       },
@@ -191,15 +184,16 @@
        */
       _processSystemFields() {
         this.systemFields = [
-          { label: '用户名', prop: 'userName', type: 'input' },
-          { label: '真实姓名', prop: 'realName', type: 'input' },
+          // { label: '用户名', prop: 'userName', type: 'input' },
+          { label: '真实姓名', prop: 'realname', type: 'input' },
           { label: '职位', prop: 'post', width: '120px', type: 'select', clearable: true },
+          { label: '手机号', prop: 'phone', type: 'input', clearable: true },
         ];
         
         if (this.action === 'create') {
           this.systemFields.push(
-            { label: '权限分组', prop: 'limit', width: '120px', type: 'select', clearable: true },
-            { label: '密码', prop: 'password', type: 'inputGroup', clearable: true },
+            // { label: '权限分组', prop: 'limit', width: '120px', type: 'select', clearable: true },
+            { label: '密码', prop: 'passwd', type: 'inputGroup', clearable: true },
           );
         } else if (this.action === 'edit') {
           this.systemFields.unshift({ label: 'ID', prop: 'id', width: '60px', type: 'normal' });
@@ -211,9 +205,9 @@
        */
       _processCustomFields() {
         this.customFields = [
-          { label: '所属部门', prop: 'ownDepartment', width: '180px', type: 'select' },
-          { label: 'QQ', prop: 'qq', width: '180px', type: 'input' },
-          { label: '微信', prop: 'weixin', width: '180px', type: 'input' },
+          // { label: '所属部门', prop: 'ownDepartment', width: '180px', type: 'select' },
+          // { label: 'QQ', prop: 'qq', width: '180px', type: 'input' },
+          // { label: '微信', prop: 'weixin', width: '180px', type: 'input' },
           { label: '性别', prop: 'sex', width: '180px', type: 'radio' },
         ];
         

@@ -82,7 +82,7 @@ export default {
         label: "组织",
         subList: [
           { path: "/user", name: "user", label: "用户" },
-          { path: "/phone", name: "phone", label: "部门" }
+          { path: "/privilegeGroup", name: "privilegeGroup", label: "权限" }
         ]
       }
     ];
