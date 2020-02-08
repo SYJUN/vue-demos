@@ -88,6 +88,25 @@ export default [
           },
         ],
       },
+  
+      /**
+       * demo 功能测试模块
+       */
+      {
+        path: '/demos',
+        name: 'demos',
+        component: SubRouterView,
+        children: [
+          {
+            path: 'user',
+            name: 'user',
+            component: () => import('../views/demos/user'),
+            meta: {
+              requireAuth: true,
+            },
+          },
+        ],
+      },
       {
         path: '/dashboard',
         name: 'dashboard',
