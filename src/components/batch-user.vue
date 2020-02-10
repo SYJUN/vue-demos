@@ -120,13 +120,13 @@
   
         // test: select field options
         options: [{
-          value: '研发',
+          value: '1',
           label: '研发'
         }, {
-          value: '主管',
+          value: '2',
           label: '主管'
         }, {
-          value: '总经理',
+          value: '3',
           label: '总经理'
         }],
       };

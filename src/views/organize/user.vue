@@ -10,12 +10,12 @@
             >添加用户</el-button
           >
         </div>
-        <el-table :data="tableUserData" stripe style="width: 100%">
+        <el-table :data="tableUserData" stripe style="width: 100%" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55"> </el-table-column>
           <el-table-column label="id">
             <template slot-scope="scope">{{ scope.row.id }}</template>
           </el-table-column>
-          <el-table-column prop="realname" label="姓名"> </el-table-column>
+          <el-table-column prop="realName" label="姓名"> </el-table-column>
           <el-table-column prop="post" label="职位"> </el-table-column>
           <el-table-column prop="sex" label="性别"> </el-table-column>
           <el-table-column prop="phone" label="电话"> </el-table-column>
@@ -40,12 +40,16 @@
             </template>
           </el-table-column>
         </el-table>
+        <div class="table-footer" v-show = "isShowTableFooter">
+          <el-button  @click="editAllTableBtn">编辑</el-button>
+          <el-button  @click="deleteAllTableBtn">删除</el-button>
+        </div>
       </template>
     </div>
     <!-- 添加单个用户的窗口 -->
     <div v-show="isAddUserSOH" class="addUser">
       <div class="addUser-border">
-        <h1><i class="el-icon-plus"></i>添加用户</h1>
+        <h1><i class="el-icon-plus"></i>{{addorEdiTitle}}</h1>
         <el-form
           :model="ruleForm"
           :rules="rules"
@@ -53,8 +57,8 @@
           label-width="100px"
           class="ruleForm"
         >
-          <el-form-item label="姓名" prop="realname">
-            <el-input v-model="ruleForm.realname"></el-input>
+          <el-form-item label="姓名" prop="realName">
+            <el-input v-model="ruleForm.realName"></el-input>
           </el-form-item>
           <el-form-item label="职位" prop="post">
             <el-input v-model="ruleForm.post"></el-input>
@@ -82,7 +86,7 @@
     </div>
     
     <!-- 批量添加、编辑用户 -->
-    <batch-user v-if="isAddUserBatchSOH" :action="batchUserAction" :data="[]" @cancel="onBatchUserBack"  @save="saveUserAllBtn"></batch-user>
+    <batch-user v-if="isShowBatchUserCom" :action="batchUserAction" :data="batchUserFields" @cancel="onBatchUserBack"  @save="saveUserAllBtn"></batch-user>
   </div>
 </template>
 
@@ -99,23 +103,27 @@ export default {
     return {
       istableDataSOH: true,
       isAddUserSOH: false,
-      isAddUserBatchSOH: false,
+      isShowBatchUserCom: false,
+      isShowTableFooter: false,
       batchUserAction: 'create',
+      addorEdiTitle:'添加用户',
       tableUserData: [],
       ruleForm: {
-        realname: "",
+        realName: "",
         post: "",
         sex: "女",
         phone: "",
         passwd: ""
       },
       rules: {
-        realname: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        realName: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         post: [{ required: true, message: "请输入职位", trigger: "blur" }],
         sex: [{ required: true, message: "请选择性别", trigger: "change" }],
         phone: [{ required: true, message: "请输入电话", trigger: "blur" }],
         passwd: [{ required: true, message: "请输入密码", trigger: "blur" }]
-      }
+      },
+      editAllTable :[],
+      batchUserFields: [],
     };
   },
 
@@ -124,10 +132,25 @@ export default {
     listAllUser() {
       this.tableUserData = [
         {
-          id:1,
-          realname:'汪智玉',
+          id:2,
+          realName:'汪智玉',
           post:'职位',
           sex:'女',
+          phone:'19234212221',
+        },
+        {
+          id:4,
+          realName:'汪智玉',
+          post:'职位',
+          sex:'女',
+          phone:'19234212221',
+        },
+        {
+          id:5,
+          realName:'汪智玉',
+          post:'职位',
+          sex:'女',
+          phone:'19234212221',
         }
       ]
       // this.axios.get("/api/staff/listAll").then(res => {
@@ -141,11 +164,14 @@ export default {
       this.istableDataSOH = false;
       this.isAddUserSOH = true;
       if(row && row.id) {
-         this.ruleForm.realname =row.realname;
+        this.addorEdiTitle = '编辑用户' ;
+         this.ruleForm.realName =row.realName;
          this.ruleForm.sex =row.sex;
          this.ruleForm.post =row.post;
          this.ruleForm.phone =row.phone;
          this.ruleForm.password =row.password;
+      }else{
+        this.addorEdiTitle = '添加用户' ;
       }
     },
     // 保存单个用户
@@ -211,7 +237,8 @@ export default {
     addBatchUserBtn() {
       this.batchUserAction = 'create';
       this.istableDataSOH = false;
-      this.isAddUserBatchSOH = true;
+      this.isShowBatchUserCom = true;
+      this.batchUserFields = [];
     },
     // 批量保存
     saveUserAllBtn(list) {
@@ -239,7 +266,7 @@ export default {
             });
             this.listAllUser();
             this.istableDataSOH = true;
-            this.isAddUserBatchSOH = false;
+            this.isShowBatchUserCom = false;
           } else {
             this.$message({
               message: res.data,
@@ -254,13 +281,54 @@ export default {
     //  返回批量
     onBatchUserBack() {
       this.istableDataSOH = true;
-      this.isAddUserBatchSOH = false;
+      this.isShowBatchUserCom = false;
+    },
+    // 获取选中的对象
+    handleSelectionChange(val) {
+      console.log('val==>', val)
+      if(val && val.length > 0){
+        this.editAllTable = val;
+        this.isShowTableFooter = true;
+      }else{
+          this.isShowTableFooter = false;
+      }
+    },
+    // 批量编辑
+    editAllTableBtn() {
+      console.log("this.editAllTable", this.editAllTable)
+      if (this.isShowBatchUserCom) return;
+      this.isShowBatchUserCom = true;
+      this.istableDataSOH = false;
+      this.batchUserAction = 'edit';
+      this.batchUserFields = this.editAllTable;
     },
     // 批量删除
-    deleteBatchUser() {
-    
+    deleteAllTableBtn() {
+      console.log(this.editAllTable)
+       const ids =  _.map(this.editAllTable, item=> {
+          return item.id
+        })
+      console.log(ids.join(','))
+       this.$confirm('是否确定删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+         this.axios.get('/api/staff/delete?id=' + ids.join(',')). then( res =>{
+              this.listAllUser();
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+
     }
-    
   },
   mounted() {
     this.listAllUser();
@@ -291,5 +359,12 @@ export default {
 .ruleForm {
   width: 600px;
   margin: 20px 0;
+}
+.table-footer{
+  width: 100%;
+  padding: 0px 10px;
+  height: 40px;
+  line-height: 40px;
+  background-color: #fff;
 }
 </style>
